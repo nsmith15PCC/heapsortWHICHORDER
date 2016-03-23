@@ -47,10 +47,10 @@ void heapSort(vector<T> &list)
     for(size_t i = 1; i <list.size(); ++i)
         reheapifyUp(list,i);
     //Take items out of the heap
-    for(int i = list.size()-1; i >= 0; --i)
+    for(size_t i = list.size()-1; i > 0; --i)
     {
         swap(list[i], list[0]);
-        reheapifyDown(list,i);
+        reheapifyDown(list,i-1);
     }
 }
 
@@ -71,7 +71,7 @@ template<typename T>
 void reheapifyUp(vector<T> &list, size_t pos)
 {
     size_t child = pos,
-            parent = parent = (child-1)/2;
+            parent = (child-1)/2;
     bool notDone = true;
     while(child && notDone)
         if(list[child] > list[parent])
