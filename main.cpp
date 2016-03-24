@@ -15,10 +15,10 @@ template<typename T>
 void heapSort(vector<T> &list);
 
 template<typename T>
-void reheapifyUp(vector<T> &list, size_t pos);
+void reheapifyUp(vector<T> &list, vector<size_t> &orderlist, size_t pos);
 
 template<typename T>
-void reheapifyDown(vector<T> &list, size_t pos);
+void reheapifyDown(vector<T> &list, vector<size_t> &orderlist, size_t pos);
 
 template<typename T>
 void print(const vector<T>&list, char* title);
@@ -44,13 +44,18 @@ template<typename T>
 void heapSort(vector<T> &list)
 {
     //Put items size_to the heap
+    vector<size_t> orderlist;
+    for (size_t i = 0; i < list.size; ++i)
+        orderlist.push_back(i);
+
     for(size_t i = 1; i <list.size(); ++i)
-        reheapifyUp(list,i);
+        reheapifyUp(list, orderlist, i);
     //Take items out of the heap
     for(size_t i = list.size()-1; i > 0; --i)
     {
         swap(list[i], list[0]);
-        reheapifyDown(list,i-1);
+        swap(orderlist[i], orderlist[0]);
+        reheapifyDown(list,orderlist, i-1);
     }
 }
 
@@ -68,7 +73,7 @@ void initialize(vector<T> &list)
 }
 
 template<typename T>
-void reheapifyUp(vector<T> &list, size_t pos)
+void reheapifyUp(vector<T> &list, vector<size_t> &orderlist, size_t pos)
 {
     size_t child = pos,
             parent = (child-1)/2;
@@ -85,7 +90,7 @@ void reheapifyUp(vector<T> &list, size_t pos)
 }
 
 template<typename T>
-void reheapifyDown(vector<T> &list, size_t pos)
+void reheapifyDown(vector<T> &list, vector<size_t> &orderlist, size_t pos)
 {
     bool notDone = true;
     size_t parent = 0, toSwap;
