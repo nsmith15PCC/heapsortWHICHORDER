@@ -36,7 +36,7 @@ int main()
     initialize(list);
     print(list,"unsorted");
     heapSort(list);
-    print(list,"sorted");
+    print(list,"sorted by index");
 }
 
 
@@ -45,7 +45,7 @@ void heapSort(vector<T> &list)
 {
     //Put items size_to the heap
     vector<size_t> orderlist;
-    for (size_t i = 0; i < list.size; ++i)
+    for (size_t i = 0; i < list.size(); ++i)
         orderlist.push_back(i);
 
     for(size_t i = 1; i <list.size(); ++i)
@@ -57,6 +57,7 @@ void heapSort(vector<T> &list)
         swap(orderlist[i], orderlist[0]);
         reheapifyDown(list,orderlist, i-1);
     }
+    list = orderlist;
 }
 
 
@@ -82,6 +83,7 @@ void reheapifyUp(vector<T> &list, vector<size_t> &orderlist, size_t pos)
         if(list[child] > list[parent])
         {
             swap(list[child],list[parent]);
+            swap(orderlist[child], orderlist[parent]);
             child = (child-1)/2;
             parent = (child-1)/2;
         }
@@ -112,6 +114,7 @@ void reheapifyDown(vector<T> &list, vector<size_t> &orderlist, size_t pos)
             if(list[parent]<list[toSwap])
             {
                 swap(list[parent], list[toSwap]);
+                swap(orderlist[parent], orderlist[toSwap]);
                 parent=toSwap;
             }
             else
